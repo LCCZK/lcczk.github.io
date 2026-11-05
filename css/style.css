@@ -1,35 +1,379 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 20px;   /* base text size (browser default is 16px); all rem sizes scale from this */
+}
+
 body {
+    margin: 0;
     background-color: black;
+    color: white;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+h1, h2, h3, p {
+    color: white;
 }
 
 p {
-    color: white;
     overflow-wrap: anywhere;
 }
-h2 {
-    color: white;
+
+a {
+    color: #7cc4ff;
 }
 
-.greeting{
+h2 {
+    font-size: 2.5rem;
+    margin-top: 0;
+    text-align: center;   /* centres the section headings */
+    margin-bottom: 3rem;  /* space between the heading and the content below */
+}
+
+/* ---------- Top navigation bar + scroll progress ---------- */
+:root {
+    --nav-height: 3.5rem;
+}
+
+/* Clicking a nav link stops the section just below the bar, not underneath it */
+section {
+    scroll-margin-top: var(--nav-height);
+}
+
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.top-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 1rem;
+    height: var(--nav-height);
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: clamp(0.5rem, 3vw, 2.5rem);
 }
 
+.top-nav a {
+    display: block;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    color: #888;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.top-nav a:hover {
+    color: white;
+}
+
+/* The section you're currently in */
+.top-nav a.active {
+    color: black;
+    background-color: white;
+}
+
+/* Grows from left to right as you scroll down the page (driven by main.js) */
+.progress-bar {
+    height: 3px;
+    background: #7cc4ff;
+    transform-origin: left;
+    transform: scaleX(0);
+}
+
+/* ---------- 1. Intro ---------- */
 .hero {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    min-height: 100vh;
+    padding: calc(var(--nav-height) + 2rem) 2rem 2rem;   /* top padding clears the nav bar */
+    overflow-x: hidden;
 }
 
 .hero img {
-    flex: 0 0 40%;
-    width: 40%;
-    height: auto;
+    flex: 0 0 auto;
+    height: 80vh;          /* 80% of the window height */
+    width: auto;           /* width follows from the photo's shape */
+    max-width: 50vw;       /* stops it squeezing the text on narrow windows */
+    object-fit: cover;
+    margin: clamp(1rem, 4vw, 4rem);   /* space around the image, grows with the window */
+    border-radius: 12px;
 }
 
 .hero .greeting {
-    flex: 1;
+    flex: 0 1 auto;        /* only as wide as the text needs, so the pair stays centred */
+    max-width: 40rem;
     min-width: 0;
+}
+
+.button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.75rem;
+    border: 2px solid white;
+    border-radius: 999px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.button.small {
+    margin-top: 0.75rem;
+    padding: 0.4rem 1.1rem;
+    font-size: 0.9rem;
+}
+
+.button:hover {
+    background-color: white;
+    color: black;
+}
+
+/* ---------- Shared section layout (About, Contact) ---------- */
+.content {
+    min-height: 100vh;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+}
+
+.card {
+    background: #151515;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* ---------- 2. About ---------- */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;   /* one column: cards stack, all the same width */
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.timeline > li {
+    padding-left: 1rem;
+    border-left: 2px solid #7cc4ff;
+    margin-bottom: 1rem;
+}
+
+.timeline span {
+    display: block;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* Education entries: university logo on top, details underneath */
+.timeline > li.edu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.edu-logo {
+    flex: 0 0 auto;
+    width: 180px;
+    height: auto;
+    padding: 0.4rem;
+    background: white;      /* the logos are dark on transparent, so they need a light tile */
+    border-radius: 8px;
+}
+
+/* Experience entries: organisation icon on the left, details on the right */
+.timeline > li.exp {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.exp-icon {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;    /* fits both the tall EUFS logo and the round UoE crest */
+    padding: 0.3rem;
+    background: white;      /* the icons have black parts, so they need a light tile */
+    border-radius: 8px;
+}
+
+.skills {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skills li {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid #444;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.card h4 {
+    margin: 1rem 0 0.5rem;
+    color: #aaa;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.points {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+}
+
+.points li {
+    margin-bottom: 0.35rem;
+}
+
+.interests {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.interests li {
+    padding: 1rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+}
+
+.interests span {
+    display: block;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* ---------- 3. Projects (horizontal scroll) ---------- */
+/* The section's height (set in main.js) controls how long you scroll
+   before the cards finish sliding. */
+.projects {
+    position: relative;
+    height: 400vh;
+}
+
+.projects-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.projects-sticky h2 {
+    padding: 0 2rem;
+}
+
+.projects-track {
+    display: flex;
+    gap: 2rem;                 /* space between project cards */
+    list-style: none;
+    margin: 0;
+    padding: 0 2rem;
+    width: max-content;        /* lets main.js measure the full row of cards */
+}
+
+.project {
+    flex: 0 0 auto;
+    display: flex;
+}
+
+.project-card .project-meta {
+    color: #aaa;
+    margin-top: -0.5rem;
+}
+
+.project-card .skills {
+    margin-top: 1rem;
+}
+
+.project-card {
+    width: min(600px, 80vw);
+    min-height: 50vh;
+    background: #151515;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+/* ---------- 4. Contact ---------- */
+.contact-list {
+    list-style: none;
+    padding: 0;
+    font-size: 1.2rem;
+}
+
+.contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.contact-icon {
+    width: 28px;
+    height: 28px;
+    filter: invert(1);      /* the icons are black; this turns them white on the dark page */
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 700px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: calc(var(--nav-height) + 1rem) 1rem 2rem;
+    }
+
+
+    .hero img {
+        max-width: 100%;
+        margin: 1.5rem auto;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .top-nav a {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.85rem;
+    }
 }
