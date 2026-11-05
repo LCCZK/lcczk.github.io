@@ -55,6 +55,27 @@ section {
     -webkit-backdrop-filter: blur(8px);
 }
 
+/* Three columns: name on the left, links in the middle, empty space on the right
+   (the empty column keeps the links centred on the page) */
+.top-nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: var(--nav-height);
+    padding: 0 1.5rem;
+}
+
+.top-nav .brand {
+    justify-self: start;
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 0;
+    background: none;
+}
+
 .top-nav ul {
     list-style: none;
     margin: 0;
@@ -131,6 +152,14 @@ section {
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.2s, color 0.2s;
+}
+
+/* Lets <button> elements use the same look as link buttons */
+button.button {
+    background: transparent;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .button.small {
@@ -281,25 +310,31 @@ section {
 }
 
 /* ---------- 3. Projects (horizontal scroll) ---------- */
-/* The section's height (set in main.js) controls how long you scroll
-   before the cards finish sliding. */
 .projects {
-    position: relative;
-    height: 400vh;
+    padding-top: 6rem;
 }
 
+.projects h2 {
+    padding: 0 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Tall wrapper: its height (set in main.js) controls how long you scroll
+   before the cards finish sliding. */
+.projects-scroller {
+    position: relative;
+}
+
+/* Pinned just below the nav bar, using the full remaining window height */
 .projects-sticky {
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: var(--nav-height);
+    height: calc(100vh - var(--nav-height));
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
-
-.projects-sticky h2 {
-    padding: 0 2rem;
+    justify-content: safe center;   /* centred, but never pushed up under the nav bar */
+    padding: 0.75rem 0;
 }
 
 .projects-track {
@@ -316,9 +351,30 @@ section {
     display: flex;
 }
 
+.project-card h3 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin: 0 0 0.75rem;
+    line-height: 1.3;
+    /* main.js gives every title the height of the tallest one;
+       shorter titles sit centred in that space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Picture under each project title; swap the src in index.html for a real photo or GIF */
+.project-media {
+    display: block;
+    width: 100%;
+    height: min(18vh, 240px);   /* capped so the whole card fits on screen */
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
 .project-card .project-meta {
     color: #aaa;
-    margin-top: -0.5rem;
 }
 
 .project-card .skills {
@@ -327,11 +383,139 @@ section {
 
 .project-card {
     width: min(600px, 80vw);
-    min-height: 50vh;
     background: #151515;
     border: 1px solid #2a2a2a;
     border-radius: 16px;
-    padding: 2rem;
+    padding: 1.25rem 2rem;
+}
+
+.project-card .button {
+    margin-top: 0.5rem;
+}
+
+.project-card p {
+    margin: 0.5rem 0;
+}
+
+/* Cards are columns so the footer (line + button) always sits at the bottom */
+.project-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-footer {
+    margin-top: auto;
+    padding-top: 0.75rem;
+}
+
+.project-footer hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 0 0 0.75rem;
+}
+
+.project-footer .button {
+    margin-top: 0;
+}
+
+/* On the card, the description is cut to 3 lines ("..."); the pop-up shows it in full */
+.project-card > p:not(.project-meta) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
+/* Only visible inside the pop-up */
+.project-details {
+    display: none;
+}
+
+/* ---------- Project pop-up ---------- */
+/* Stop the page behind from scrolling while the pop-up is open */
+html:has(.project-modal[open]) {
+    overflow: hidden;
+}
+
+.project-modal {
+    width: min(760px, 92vw);
+    max-height: 88vh;
+    padding: 0;
+    border: 1px solid #333;
+    border-radius: 16px;
+    background: #151515;
+    color: white;
+    overflow: auto;
+}
+
+.project-modal::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+.project-modal[open]::backdrop {
+    animation: backdrop-fade 0.3s ease;
+}
+
+@keyframes backdrop-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.modal-inner {
+    position: relative;
+    padding: 2.5rem 2rem 2rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid #444;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: white;
+    color: black;
+}
+
+.project-modal h3 {
+    font-size: 1.9rem;
+    text-align: center;
+    line-height: 1.3;
+    margin: 0 2rem 1rem;
+}
+
+.project-modal .project-media {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 45vh;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.project-modal .project-meta {
+    color: #aaa;
+}
+
+.project-modal .skills {
+    margin-top: 1rem;
+}
+
+.project-modal .project-details {
+    display: block;
+    margin-top: 1rem;
 }
 
 /* ---------- 4. Contact ---------- */
@@ -370,6 +554,63 @@ section {
 
     h2 {
         font-size: 2rem;
+    }
+
+    /* On phones the projects stack vertically instead of sliding sideways
+       (main.js turns the horizontal scroll off at this width) */
+    .projects {
+        padding-top: 4rem;
+    }
+
+    .projects-scroller {
+        height: auto !important;
+    }
+
+    .projects-sticky {
+        position: static;
+        height: auto;
+        overflow: visible;
+        padding: 0 0 2rem;
+    }
+
+    .projects-track {
+        flex-direction: column;
+        width: auto;
+        padding: 0 1rem;
+        transform: none !important;
+    }
+
+    .project-card {
+        width: 100%;
+        padding: 1.25rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.35rem;
+    }
+
+    .project-media {
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .modal-inner {
+        padding: 2.5rem 1.25rem 1.5rem;
+    }
+
+    .project-modal h3 {
+        font-size: 1.4rem;
+        margin: 0 1.5rem 0.75rem;
+    }
+
+    /* Not enough room for the name and the links on phones */
+    .top-nav {
+        display: block;
+        padding: 0;
+    }
+
+    .top-nav .brand {
+        display: none;
     }
 
     .top-nav a {

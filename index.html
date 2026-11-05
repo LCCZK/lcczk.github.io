@@ -16,6 +16,7 @@
 <!-- Navigation bar (fixed to the top) with a scroll progress bar underneath -->
 <header class="top-bar">
     <nav class="top-nav" aria-label="Sections">
+        <a class="brand" href="#intro">Lukas Chen</a>
         <ul>
             <li><a href="#intro">Intro</a></li>
             <li><a href="#about">About</a></li>
@@ -32,8 +33,9 @@
     <div class="greeting">
         <h1>Hi!
             <br>I'm Lukas Chen,
-            <br>MSc Robotics student at
-            <br>University of Manchester.</h1>
+            <!-- <br>MSc Robotics student at
+            <br>University of Manchester. -->
+        </h1>
         <p>I'm an MSc Robotics student at the University of Manchester. Before that, I graduated from the
             University of Edinburgh with a First Class BSc in Artificial Intelligence &amp; Computer Science,
             where my dissertation looked at the Sim2Real gap in reinforcement learning for contact-rich
@@ -146,62 +148,98 @@
 </section>
 
 <!-- 3. PROJECTS (horizontal scroll) -->
-<!-- This section is tall; while you scroll through it, the cards slide sideways. -->
 <section id="projects" class="projects">
+    <h2>My projects</h2>
+    <!-- This wrapper is tall; while you scroll through it, the cards stay pinned
+         under the nav bar and slide sideways. -->
+    <div class="projects-scroller">
     <div class="projects-sticky">
-        <h2>My projects</h2>
         <ul class="projects-track">
             <li class="project">
                 <div class="project-card">
                     <h3>Robotic Sim2Real for Non-Prehensile Manipulation</h3>
+                    <img class="project-media" src="img/icon/media_placeholder.png" alt="Robotic Sim2Real for Non-Prehensile Manipulation">
                     <p class="project-meta">BSc dissertation · supervised by Prof. Sethu Vijayakumar</p>
                     <p>Trained reinforcement learning agents for non-prehensile manipulation in MuJoCo and Isaac Sim,
                         and built pipelines for training across multiple simulators. The research looks at how the
                         structure of the dynamics model affects Sim2Real transfer.</p>
                     <ul class="skills"><li>Reinforcement learning</li><li>MuJoCo</li><li>Isaac Sim</li><li>Sim2Real</li></ul>
-                    <a class="button" href="doc/UoE_dissertation.pdf" target="_blank" rel="noopener">Read the dissertation</a>
+                    <!-- Extra content: hidden on the card, shown only in the pop-up -->
+                    <div class="project-details">
+                        <a class="button" href="doc/UoE_dissertation.pdf" target="_blank" rel="noopener">Read my dissertation</a>
+                    </div>
+                    <div class="project-footer">
+                        <hr>
+                        <button class="button small expand-btn" type="button">Read more</button>
+                    </div>
                 </div>
             </li>
             <li class="project">
                 <div class="project-card">
                     <h3>MuJoCo MCP</h3>
+                    <img class="project-media" src="img/icon/media_placeholder.png" alt="MuJoCo MCP">
                     <p>An MCP server that exposes a gym-like API as skills, so LLM agents can interact with
                         physics simulations.</p>
                     <ul class="skills"><li>MuJoCo</li><li>MCP</li><li>LLM agents</li><li>Python</li></ul>
+                    <div class="project-footer">
+                        <hr>
+                        <button class="button small expand-btn" type="button">Read more</button>
+                    </div>
                 </div>
             </li>
             <li class="project">
                 <div class="project-card">
                     <h3>LLM-Powered SQL Query Interface</h3>
+                    <img class="project-media" src="img/icon/media_placeholder.png" alt="LLM-Powered SQL Query Interface">
                     <p>A natural-language interface for querying databases, connecting an LLM to PostgreSQL
                         through an MCP server.</p>
                     <ul class="skills"><li>LLM</li><li>MCP</li><li>PostgreSQL</li></ul>
+                    <div class="project-footer">
+                        <hr>
+                        <button class="button small expand-btn" type="button">Read more</button>
+                    </div>
                 </div>
             </li>
             <li class="project">
                 <div class="project-card">
                     <h3>Q-Learning Path Planner</h3>
+                    <img class="project-media" src="img/icon/media_placeholder.png" alt="Q-Learning Path Planner">
                     <p>A Q-learning agent for path planning in 2D grid worlds, with reward shaping and
                         epsilon-greedy exploration.</p>
                     <ul class="skills"><li>Reinforcement learning</li><li>Q-learning</li><li>Python</li></ul>
+                    <div class="project-footer">
+                        <hr>
+                        <button class="button small expand-btn" type="button">Read more</button>
+                    </div>
                 </div>
             </li>
             <li class="project">
                 <div class="project-card">
                     <h3>Auto-Irrigation System</h3>
+                    <img class="project-media" src="img/icon/media_placeholder.png" alt="Auto-Irrigation System">
                     <p>A Raspberry Pi system with soil-moisture sensors and an electric valve. A script triggers
                         watering whenever moisture drops below a configurable threshold.</p>
                     <ul class="skills"><li>Raspberry Pi</li><li>Sensors</li><li>Embedded</li></ul>
+                    <div class="project-footer">
+                        <hr>
+                        <button class="button small expand-btn" type="button">Read more</button>
+                    </div>
                 </div>
             </li>
             <li class="project">
                 <div class="project-card">
                     <h3>REST API for Drone Delivery</h3>
+                    <img class="project-media" src="img/icon/media_placeholder.png" alt="REST API for Drone Delivery">
                     <p>A REST API that handles requests for a drone delivery application.</p>
                     <ul class="skills"><li>REST API</li><li>Java</li><li>Spring</li></ul>
+                    <div class="project-footer">
+                        <hr>
+                        <button class="button small expand-btn" type="button">Read more</button>
+                    </div>
                 </div>
             </li>
         </ul>
+    </div>
     </div>
 </section>
 
@@ -224,6 +262,14 @@
         </li>
     </ul>
 </section>
+
+<!-- Pop-up for an expanded project card (filled in by main.js) -->
+<dialog class="project-modal" aria-label="Project details">
+    <div class="modal-inner">
+        <button class="modal-close" type="button" aria-label="Close">&times;</button>
+        <div class="modal-content"></div>
+    </div>
+</dialog>
 
 </body>
 

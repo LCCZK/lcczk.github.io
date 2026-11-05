@@ -31,7 +31,7 @@ inView(".reveal", (element) => {
 // A section counts as "current" while it crosses the middle line of the window.
 // (This also works for the tall Projects section.)
 document.querySelectorAll("section[id]").forEach((section) => {
-    const link = document.querySelector(`.top-nav a[href="#${section.id}"]`);
+    const link = document.querySelector(`.top-nav ul a[href="#${section.id}"]`);
     if (!link) return;
 
     inView(section, () => {
@@ -51,26 +51,54 @@ scroll((progress) => {
 // While you scroll down through the Projects section, the row of cards slides left
 // until the last card is in view. The slide distance is measured from the real width
 // of the cards, so you can change card sizes or the gap in CSS freely.
-const projectsSection = document.querySelector(".projects");
+const projectsScroller = document.querySelector(".projects-scroller");
 const projectsTrack = document.querySelector(".projects-track");
 let stopProjectsScroll = null;
 
+// Same width as the phone rules in style.css
+const phoneLayout = window.matchMedia("(max-width: 700px)");
+
+// Give every project title the same height (the tallest title's), so the
+// pictures underneath all line up.
+function equaliseProjectTitles() {
+    const titles = document.querySelectorAll(".project-card h3");
+    titles.forEach((t) => (t.style.minHeight = ""));
+    if (phoneLayout.matches) return;   // stacked vertically on phones, no need
+    const tallest = Math.max(...[...titles].map((t) => t.offsetHeight));
+    titles.forEach((t) => (t.style.minHeight = `${tallest}px`));
+}
+
 function setUpProjectsScroll() {
+    equaliseProjectTitles();
     if (stopProjectsScroll) stopProjectsScroll();
+    stopProjectsScroll = null;
     projectsTrack.style.transform = "none";
+
+    // On phones the cards are stacked vertically, so there's nothing to slide.
+    if (phoneLayout.matches) {
+        projectsScroller.style.height = "";
+        return;
+    }
 
     const distance = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
 
-    // One pixel of vertical scrolling moves the cards one pixel sideways.
-    projectsSection.style.height = `${window.innerHeight + distance}px`;
+    // The pinned area is the window minus the nav bar. Adding the slide distance
+    // means one pixel of vertical scrolling moves the cards one pixel sideways.
+    const sticky = document.querySelector(".projects-sticky");
+    const pinTop = parseFloat(getComputedStyle(sticky).top);   // where the cards pin (below the nav bar)
+    const pinnedHeight = sticky.offsetHeight;
+    projectsScroller.style.height = `${pinnedHeight + distance}px`;
 
-    // progress goes from 0 (section just pinned to the top of the window)
-    // to 1 (section about to un-pin); the cards move left in step with it.
+    // progress goes from 0 (cards just pinned under the nav bar)
+    // to 1 (about to un-pin); the cards move left in step with it.
     stopProjectsScroll = scroll(
         (progress) => {
             projectsTrack.style.transform = `translateX(${-progress * distance}px)`;
         },
-        { target: projectsSection, offset: ["start start", "end end"] }
+        {
+            target: projectsScroller,
+            offset: [`start ${pinTop}px`, "end end"],
+        }
     );
 }
 
@@ -81,4 +109,55 @@ let resizeTimer;
 window.addEventListener("resize", () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(setUpProjectsScroll, 150);
+});
+
+/* ---------- Project pop-up ---------- */
+// "Read more" copies that card's content into the pop-up and animates it open.
+// Anything inside .project-details only shows up here, not on the card.
+const modal = document.querySelector(".project-modal");
+const modalContent = modal.querySelector(".modal-content");
+let modalClosing = false;
+
+function openProject(card) {
+    modalContent.innerHTML = "";
+    for (const child of card.children) {
+        if (child.classList.contains("project-footer")) continue;   // no "Read more" in the pop-up
+        const copy = child.cloneNode(true);
+        copy.style.minHeight = "";   // drop the equal-title-height setting
+        modalContent.appendChild(copy);
+    }
+    modal.showModal();
+    modal.scrollTop = 0;
+    animate(
+        modal,
+        { opacity: [0, 1], scale: [0.9, 1], y: [40, 0] },
+        { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
+    );
+}
+
+function closeProject() {
+    if (modalClosing || !modal.open) return;
+    modalClosing = true;
+    animate(modal, { opacity: 0, scale: 0.95, y: 20 }, { duration: 0.2, ease: "easeIn" })
+        .then(() => {
+            modal.close();
+            modalClosing = false;
+        });
+}
+
+document.querySelectorAll(".expand-btn").forEach((button) => {
+    button.addEventListener("click", () => openProject(button.closest(".project-card")));
+});
+
+modal.querySelector(".modal-close").addEventListener("click", closeProject);
+
+// Clicking the dark area outside the pop-up closes it
+modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeProject();
+});
+
+// The Esc key closes it too, with the same animation
+modal.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeProject();
 });
