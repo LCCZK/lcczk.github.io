@@ -180,6 +180,8 @@ function openProject(card) {
         if (child.classList.contains("project-footer")) continue;   // no "Read more" in the pop-up
         const copy = child.cloneNode(true);
         copy.style.minHeight = "";   // drop the equal-title-height setting
+        copy.style.height = "";      // drop the card's cropped picture height...
+        copy.style.flex = "";        // ...so the pop-up shows the media at its own shape
         modalContent.appendChild(copy);
     }
     modal.showModal();

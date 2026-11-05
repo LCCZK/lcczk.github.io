@@ -618,11 +618,13 @@ html:has(.project-modal[open]) {
 }
 
 .project-modal .project-media {
+    /* Full width at the media's own shape: nothing is cropped or stretched.
+       If it's taller than the pop-up, the pop-up scrolls. */
+    display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 16 / 9;
-    max-height: 45vh;
-    object-fit: cover;
+    aspect-ratio: auto;    /* overrides the 16:9 card shape used on phones */
+    object-fit: contain;
     border-radius: 10px;
     margin-bottom: 1rem;
 }
