@@ -15,7 +15,7 @@ themeToggle.addEventListener("click", () => {
     const light = document.documentElement.dataset.theme !== "light";
     if (light) document.documentElement.dataset.theme = "light";
     else delete document.documentElement.dataset.theme;
-    try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) {}
+    try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) { }
     updateThemeButton();
     animate(themeToggle, { rotate: [0, 360] }, { duration: 0.5, ease: "easeOut" });
 });
@@ -84,9 +84,23 @@ const phoneLayout = window.matchMedia("(max-width: 700px)");
 function equaliseProjectTitles() {
     const titles = document.querySelectorAll(".project-card h3");
     titles.forEach((t) => (t.style.minHeight = ""));
-    if (phoneLayout.matches) return;   // stacked vertically on phones, no need
+    if (phoneLayout.matches) {         // stacked vertically on phones, no need
+        document.querySelectorAll(".project-card .project-media")
+            .forEach((m) => (m.style.height = m.style.flex = ""));
+        return;
+    }
     const tallest = Math.max(...[...titles].map((t) => t.offsetHeight));
     titles.forEach((t) => (t.style.minHeight = `${tallest}px`));
+
+    // Pictures shrink on short windows (see .project-media in style.css), each by a
+    // different amount; give them all the smallest height so they line up too.
+    const pictures = [...document.querySelectorAll(".project-card .project-media")];
+    pictures.forEach((m) => (m.style.height = m.style.flex = ""));
+    const smallest = Math.min(...pictures.map((m) => m.getBoundingClientRect().height));
+    pictures.forEach((m) => {
+        m.style.height = `${smallest}px`;
+        m.style.flex = "none";
+    });
 }
 
 function setUpProjectsScroll() {
@@ -98,23 +112,44 @@ function setUpProjectsScroll() {
     // On phones the cards are stacked vertically, so there's nothing to slide.
     if (phoneLayout.matches) {
         projectsScroller.style.height = "";
+        projectsTrack.style.paddingLeft = "";
         return;
     }
 
-    const distance = Math.max(0, projectsTrack.scrollWidth - window.innerWidth);
+    // Start with the first card (the current project) centred in the window.
+    const firstCard = projectsTrack.querySelector(".project-card");
+    const pageWidth = document.documentElement.clientWidth;
+    projectsTrack.style.paddingLeft = `${Math.max(0, (pageWidth - firstCard.offsetWidth) / 2)}px`;
+
+    // The slide stops when the centre of the last card reaches this fraction of the
+    // screen width (0.75 = three quarters of the way across).
+    const END_POSITION = 0.5;
+    // Extra scrolling (as a fraction of the window height) where the cards stay
+    // still at the end before the page moves on to Contact.
+    const END_PAUSE = 0.2;
+
+    const cards = projectsTrack.querySelectorAll(".project-card");
+    const lastCard = cards[cards.length - 1];
+    const trackLeft = projectsTrack.getBoundingClientRect().left;
+    const lastCentre = lastCard.getBoundingClientRect().left - trackLeft + lastCard.offsetWidth / 2;
+    const distance = Math.max(0, lastCentre - END_POSITION * pageWidth);
+    const pause = END_PAUSE * window.innerHeight;
 
     // The pinned area is the window minus the nav bar. Adding the slide distance
-    // means one pixel of vertical scrolling moves the cards one pixel sideways.
+    // means one pixel of vertical scrolling moves the cards one pixel sideways;
+    // the pause adds the extra still scrolling at the end.
     const sticky = document.querySelector(".projects-sticky");
     const pinTop = parseFloat(getComputedStyle(sticky).top);   // where the cards pin (below the nav bar)
     const pinnedHeight = sticky.offsetHeight;
-    projectsScroller.style.height = `${pinnedHeight + distance}px`;
+    projectsScroller.style.height = `${pinnedHeight + distance + pause}px`;
 
-    // progress goes from 0 (cards just pinned under the nav bar)
-    // to 1 (about to un-pin); the cards move left in step with it.
+    // progress goes from 0 (cards just pinned under the nav bar) to 1 (about to
+    // un-pin). The first part slides the cards; the last part is the pause.
+    const slideShare = distance / (distance + pause || 1);
     stopProjectsScroll = scroll(
         (progress) => {
-            projectsTrack.style.transform = `translateX(${-progress * distance}px)`;
+            const slid = slideShare > 0 ? Math.min(1, progress / slideShare) : 0;
+            projectsTrack.style.transform = `translateX(${-slid * distance}px)`;
         },
         {
             target: projectsScroller,

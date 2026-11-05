@@ -12,7 +12,7 @@
             if (localStorage.getItem("theme") === "light") {
                 document.documentElement.dataset.theme = "light";
             }
-        } catch (e) {}
+        } catch (e) { }
     </script>
     <!-- Motion animation library (normal script, so the page also works when opened by double-clicking) -->
     <script defer src="https://cdn.jsdelivr.net/npm/motion@12.43.0/dist/motion.js"></script>
@@ -21,274 +21,436 @@
 
 <body>
 
-<!-- Navigation bar (fixed to the top) with a scroll progress bar underneath -->
-<header class="top-bar">
-    <nav class="top-nav" aria-label="Sections">
-        <a class="brand" href="#intro">Lukas Chen</a>
-        <ul>
-            <li><a href="#intro">Bio</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="theme-toggle" type="button" aria-label="Switch to light mode">
-            <!-- sun: shown in dark mode -->
-            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="4.5"/>
-                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-            </svg>
-            <!-- moon: shown in light mode -->
-            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
-            </svg>
-        </button>
-    </nav>
-    <div class="progress-bar"></div>
-</header>
+    <!-- Navigation bar (fixed to the top) with a scroll progress bar underneath -->
+    <header class="top-bar">
+        <nav class="top-nav" aria-label="Sections">
+            <a class="brand" href="#intro">Lukas Chen</a>
+            <ul>
+                <li><a href="#intro">Bio</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" type="button" aria-label="Switch to light mode">
+                <!-- sun: shown in dark mode -->
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4.5" />
+                    <path
+                        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                </svg>
+                <!-- moon: shown in light mode -->
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+                </svg>
+            </button>
+        </nav>
+        <div class="progress-bar"></div>
+    </header>
 
-<!-- 1. INTRO -->
-<section id="intro" class="hero">
-    <img src="img/valkyrie.JPG" alt="Lukas">
-    <div class="greeting">
-        <h1>Hi!
-            <br>I'm Lukas Chen,
-            <!-- <br>MSc Robotics student at
+    <!-- 1. INTRO -->
+    <section id="intro" class="hero">
+        <img src="img/valkyrie.JPG" alt="Lukas">
+        <div class="greeting">
+            <h1>Hi!
+                <br>I'm Lukas Chen,
+                <!-- <br>MSc Robotics student at
             <br>University of Manchester. -->
-        </h1>
-        <p>I'm an MSc Robotics student at the University of Manchester. Before that, I graduated from the
-            University of Edinburgh with a First Class BSc in Artificial Intelligence &amp; Computer Science,
-            where my dissertation looked at the Sim2Real gap in reinforcement learning for contact-rich
-            robotic manipulation. For four years I was a software developer on Edinburgh University
-            Formula Student's autonomous driving team, which won the AI division at Formula Student UK
-            three years in a row.</p>
-        <a class="button" href="doc/Lukas_CV.pdf" target="_blank" rel="noopener">View my CV</a>
-    </div>
-</section>
-
-<!-- 2. ABOUT ME -->
-<section id="about" class="content reveal">
-    <h2>About me</h2>
-
-    <div class="about-grid">
-        <div class="card">
-            <h3>Education</h3>
-            <ul class="timeline">
-                <li class="edu">
-                    <img class="edu-logo" src="img/icon/banner-UoM.png" alt="The University of Manchester">
-                    <div>
-                        <strong>MSc Robotics</strong>
-                        <span>University of Manchester · Sep 2026 – Sep 2027</span>
-                    </div>
-                </li>
-                <li class="edu">
-                    <img class="edu-logo" src="img/icon/banner-UoE.png" alt="The University of Edinburgh">
-                    <div>
-                        <strong>BSc Artificial Intelligence &amp; Computer Science</strong>
-                        <span>University of Edinburgh · Sep 2022 – Jul 2026</span>
-                        <span>1st Class with Honours</span>
-                        <span>Dissertation: Sim2Real Gap in Reinforcement Learning for Robotic Contact-rich Manipulation</span>
-                        <a class="button small" href="doc/UoE_dissertation.pdf" target="_blank" rel="noopener">Read my dissertation</a>
-                    </div>
-                </li>
-            </ul>
+            </h1>
+            <p>I'm an MSc Robotics student at the University of Manchester. Before that, I graduated from the
+                University of Edinburgh with a First Class BSc in Artificial Intelligence &amp; Computer Science,
+                where my dissertation looked at the Sim2Real gap in reinforcement learning for contact-rich
+                robotic manipulation. For four years I was a software developer on Edinburgh University
+                Formula Student's autonomous driving team, which won the AI division at Formula Student UK
+                three years in a row.</p>
+            <a class="button" href="doc/Lukas_CV.pdf" target="_blank" rel="noopener">View my CV</a>
         </div>
+    </section>
 
-        <div class="card">
-            <h3>Experience</h3>
-            <ul class="timeline">
-                <li class="exp">
-                    <img class="exp-icon" src="img/icon/icon-eufs.png" alt="Edinburgh University Formula Student">
-                    <div>
-                        <strong>Software Developer, Edinburgh University Formula Student (EUFS)</strong>
-                        <span>Edinburgh · Sep 2022 – Jul 2026</span>
-                    </div>
-                </li>
-                <li class="exp">
-                    <img class="exp-icon" src="img/icon/icon-UoE.png" alt="The University of Edinburgh">
-                    <div>
-                        <strong>Teaching Assistant, University of Edinburgh</strong>
-                        <span>Jan – Apr 2026</span>
-                    </div>
-                </li>
-                <li class="exp">
-                    <img class="exp-icon" src="img/icon/icon-UoE.png" alt="The University of Edinburgh">
-                    <div>
-                        <strong>Summer Research Intern, IPAB, University of Edinburgh</strong>
-                        <span>Jun – Sep 2025</span>
-                    </div>
-                </li>
-            </ul>
+    <!-- 2. ABOUT ME -->
+    <section id="about" class="content reveal">
+        <h2>About me</h2>
+
+        <div class="about-grid">
+            <div class="card">
+                <h3>Education</h3>
+                <ul class="timeline">
+                    <li class="edu">
+                        <img class="edu-logo" src="img/icon/banner-UoM.png" alt="The University of Manchester">
+                        <div>
+                            <strong>MSc Robotics</strong>
+                            <span>University of Manchester · Sep 2026 – Sep 2027</span>
+                        </div>
+                    </li>
+                    <li class="edu">
+                        <img class="edu-logo" src="img/icon/banner-UoE.png" alt="The University of Edinburgh">
+                        <div>
+                            <strong>BSc Artificial Intelligence &amp; Computer Science</strong>
+                            <span>University of Edinburgh · Sep 2022 – Jul 2026</span>
+                            <span>1st Class with Honours</span>
+                            <span>Dissertation: Sim2Real Gap in Reinforcement Learning for Robotic Contact-rich
+                                Manipulation</span>
+                            <a class="button small" href="doc/UoE_dissertation.pdf" target="_blank" rel="noopener">Read
+                                my dissertation</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Experience</h3>
+                <ul class="timeline">
+                    <li class="exp">
+                        <img class="exp-icon" src="img/icon/banner-UoM.png" alt="The University of Manchester">
+                        <div>
+                            <strong>Research Intern, University of Manchester</strong>
+                            <span>VLA + tactile sensing for humanoid manipulation · 2026 – present</span>
+                        </div>
+                    </li>
+                    <li class="exp">
+                        <img class="exp-icon" src="img/icon/icon-eufs.png" alt="Edinburgh University Formula Student">
+                        <div>
+                            <strong>Software Developer, Edinburgh University Formula Student (EUFS)</strong>
+                            <span>Sep 2022 – Jul 2026</span>
+                        </div>
+                    </li>
+                    <li class="exp">
+                        <img class="exp-icon" src="img/icon/icon-UoE.png" alt="The University of Edinburgh">
+                        <div>
+                            <strong>Teaching Assistant, University of Edinburgh</strong>
+                            <span>Jan – Apr 2026</span>
+                        </div>
+                    </li>
+                    <li class="exp">
+                        <img class="exp-icon" src="img/icon/icon-UoE.png" alt="The University of Edinburgh">
+                        <div>
+                            <strong>Summer Research Intern, IPAB, University of Edinburgh</strong>
+                            <span>Jun – Sep 2025</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Skills</h3>
+                <h4>Programming languages</h4>
+                <ul class="skills">
+                    <li>Python</li>
+                    <li>C++</li>
+                    <li>C</li>
+                    <li>Java</li>
+                    <li>JavaScript</li>
+                    <li>SQL</li>
+                    <li>MIPS</li>
+                    <li>PDDL</li>
+                    <li>Haskell</li>
+                </ul>
+                <h4>Robotics &amp; machine learning</h4>
+                <ul class="skills">
+                    <li>ROS 2</li>
+                    <li>MuJoCo</li>
+                    <li>Isaac Sim</li>
+                    <li>PyBullet</li>
+                    <li>PyTorch</li>
+                    <li>TensorFlow</li>
+                    <li>SKRL</li>
+                    <li>NumPy</li>
+                    <li>MATLAB</li>
+                </ul>
+                <h4>Software &amp; tools</h4>
+                <ul class="skills">
+                    <li>Linux</li>
+                    <li>Docker</li>
+                    <li>Git</li>
+                    <li>Fusion</li>
+                    <li>React</li>
+                    <li>Spring</li>
+                    <li>Redis</li>
+                    <li>Kafka</li>
+                </ul>
+                <h4>Languages</h4>
+                <ul class="skills">
+                    <li>English (Fluent)</li>
+                    <li>Chinese (Native)</li>
+                    <li>Cantonese (Native)</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Research interests</h3>
+                <ul class="interests">
+                    <li>
+                        <strong>Reinforcement learning for robotics</strong>
+                    </li>
+                    <li>
+                        <strong>Sim2Real transfer</strong>
+                    </li>
+                    <li>
+                        <strong>Contact-rich manipulation</strong>
+                    </li>
+                    <li>
+                        <strong>State estimation &amp; SLAM</strong>
+                    </li>
+                    <li>
+                        <strong>LLM agents for robotics</strong>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </section>
 
-        <div class="card">
-            <h3>Skills</h3>
-            <h4>Programming languages</h4>
-            <ul class="skills">
-                <li>Python</li><li>C++</li><li>C</li><li>Java</li><li>JavaScript</li>
-                <li>SQL</li><li>MIPS</li><li>PDDL</li><li>Haskell</li>
-            </ul>
-            <h4>Robotics &amp; machine learning</h4>
-            <ul class="skills">
-                <li>ROS 2</li><li>MuJoCo</li><li>Isaac Sim</li><li>PyBullet</li>
-                <li>PyTorch</li><li>TensorFlow</li><li>SKRL</li><li>NumPy</li><li>MATLAB</li>
-            </ul>
-            <h4>Software &amp; tools</h4>
-            <ul class="skills">
-                <li>Linux</li><li>Docker</li><li>Git</li><li>Fusion</li>
-                <li>React</li><li>Spring</li><li>Redis</li><li>Kafka</li>
-            </ul>
-            <h4>Languages</h4>
-            <ul class="skills">
-                <li>English (Fluent)</li><li>Chinese (Native)</li><li>Cantonese (Native)</li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>Research interests</h3>
-            <ul class="interests">
-                <li>
-                    <strong>Reinforcement learning for robotics</strong>
-                </li>
-                <li>
-                    <strong>Sim2Real transfer</strong>
-                </li>
-                <li>
-                    <strong>Contact-rich manipulation</strong>
-                </li>
-                <li>
-                    <strong>State estimation &amp; SLAM</strong>
-                </li>
-                <li>
-                    <strong>LLM agents for robotics</strong>
-                </li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<!-- 3. PROJECTS (horizontal scroll) -->
-<section id="projects" class="projects">
-    <!-- This wrapper is tall; while you scroll through it, the heading and cards stay
+    <!-- 3. PROJECTS (horizontal scroll) -->
+    <section id="projects" class="projects">
+        <!-- This wrapper is tall; while you scroll through it, the heading and cards stay
          pinned in the middle of the screen and the cards slide sideways. -->
-    <div class="projects-scroller">
-    <div class="projects-sticky">
-        <h2>My projects</h2>
-        <ul class="projects-track">
-            <li class="project">
-                <div class="project-card">
-                    <h3>Robotic Sim2Real for Non-Prehensile Manipulation</h3>
-                    <img class="project-media" src="img/icon/media_placeholder.png" alt="Robotic Sim2Real for Non-Prehensile Manipulation">
-                    <p class="project-meta">BSc dissertation · supervised by Prof. Sethu Vijayakumar</p>
-                    <p>Trained reinforcement learning agents for non-prehensile manipulation in MuJoCo and Isaac Sim,
-                        and built pipelines for training across multiple simulators. The research looks at how the
-                        structure of the dynamics model affects Sim2Real transfer.</p>
-                    <ul class="skills"><li>Reinforcement learning</li><li>MuJoCo</li><li>Isaac Sim</li><li>Sim2Real</li></ul>
-                    <!-- Extra content: hidden on the card, shown only in the pop-up -->
-                    <div class="project-details">
-                        <a class="button" href="doc/UoE_dissertation.pdf" target="_blank" rel="noopener">Read my dissertation</a>
-                    </div>
-                    <div class="project-footer">
-                        <hr>
-                        <button class="button small expand-btn" type="button">Read more</button>
-                    </div>
-                </div>
+        <div class="projects-scroller">
+            <div class="projects-sticky">
+                <h2>My projects</h2>
+                <ul class="projects-track">
+                    <!-- CURRENT PROJECT -->
+                    <li class="project">
+                        <div class="project-card">
+                            <h3>VLA + Tactile for Humanoid Manipulation</h3>
+                            <p class="project-meta"><span class="badge-current">Current</span> Research internship ·
+                                University of Manchester</p>
+                            <p>Building a vision-language-action (VLA) model that gives a humanoid robot a sense of
+                                touch. Using the iCub's stereo vision and tactile signals, the work targets tabletop
+                                manipulation and learning actions from human demonstrations, aiming for robots that
+                                perceive and act more like humans.</p>
+                            <ul class="skills">
+                                <li>VLA models</li>
+                                <li>Tactile sensing</li>
+                                <li>Humanoid robots</li>
+                                <li>iCub</li>
+                            </ul>
+                            <!-- Extra content: hidden on the card, shown only in the pop-up -->
+                            <div class="project-details">
+                                <p class="project-meta">Supervised by Dr. Wenjie Huang and Dr. Fangjun Li</p>
+                                <a class="button"
+                                    href="https://rahullabs.notion.site/Project-4-VLA-tactile-for-humanoid-manipulation-and-action-learning-7eb0ca97dad3823f914f0148b96929c3"
+                                    target="_blank" rel="noopener">View project page</a>
+                            </div>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Vertical line between the current project and past projects -->
+                    <li class="project-divider" aria-hidden="true"></li>
+
+                    <!-- PAST PROJECTS -->
+                    <li class="project">
+                        <div class="project-card">
+                            <h3>Robotic Sim2Real for Non-Prehensile Manipulation</h3>
+                            <img class="project-media" src="img/project/diss/diss.gif"
+                                alt="Robotic Sim2Real for Non-Prehensile Manipulation">
+                            <p class="project-meta">BSc dissertation · supervised by Prof. Sethu Vijayakumar</p>
+                            <p>Trained reinforcement learning agents for non-prehensile manipulation in MuJoCo and Isaac
+                                Sim,
+                                and built pipelines for training across multiple simulators. The research looks at how
+                                the
+                                structure of the dynamics model affects Sim2Real transfer.</p>
+                            <ul class="skills">
+                                <li>Reinforcement learning</li>
+                                <li>MuJoCo</li>
+                                <li>Isaac Sim</li>
+                                <li>Sim2Real</li>
+                            </ul>
+                            <!-- Extra content: hidden on the card, shown only in the pop-up -->
+                            <div class="project-details">
+                                <a class="button" href="doc/UoE_dissertation.pdf" target="_blank" rel="noopener">Read my
+                                    dissertation</a>
+                            </div>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="project">
+                        <div class="project-card">
+                            <h3>Autonomous Driving System for EUFS</h3>
+                            <img class="project-media" src="img/project/eufs.gif"
+                                alt="Autonomous Driving System for EUFS">
+                            <p class="project-meta">Edinburgh University Formula Student · 2022 – 2026</p>
+                            <p>Core developer on the ROS-based software that drives the team's autonomous race car,
+                                which won the AI division at Formula Student UK three years running (2023–2025). Led
+                                the 8-person Localisation &amp; Mapping sub-team, implemented real-time state estimation
+                                (FastSLAM, EKF, particle filter), and built CI/CD pipelines that halved code review
+                                time.</p>
+                            <ul class="skills">
+                                <li>ROS</li>
+                                <li>SLAM</li>
+                                <li>State estimation</li>
+                                <li>CI/CD</li>
+                            </ul>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project">
+                        <div class="project-card">
+                            <h3>MuJoCo MCP</h3>
+                            <img class="project-media" src="img/project/mj_mcp/mj-mcp.gif" alt="MuJoCo MCP">
+                            <p>An MCP server that exposes a gym-like API as skills, so LLM agents can interact with
+                                physics simulations.</p>
+                            <ul class="skills">
+                                <li>MuJoCo</li>
+                                <li>MCP</li>
+                                <li>LLM agents</li>
+                                <li>Python</li>
+                            </ul>
+                            <!-- Extra content: hidden on the card, shown only in the pop-up -->
+                            <div class="project-details">
+                                <a class="button" href="https://github.com/LCCZK/humanoid-swe-challenge" target="_blank"
+                                    rel="noopener">View on GitHub</a>
+                            </div>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li class="project">
+                        <div class="project-card">
+                            <h3>LLM-Powered SQL Query Interface</h3>
+                            <img class="project-media" src="img/icon/media_placeholder.png"
+                                alt="LLM-Powered SQL Query Interface">
+                            <p>A natural-language interface for querying databases, connecting an LLM to PostgreSQL
+                                through an MCP server.</p>
+                            <ul class="skills">
+                                <li>LLM</li>
+                                <li>MCP</li>
+                                <li>PostgreSQL</li>
+                            </ul>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li> -->
+                    <li class="project">
+                        <div class="project-card">
+                            <h3>Dual-Arm Motion Planning &amp; Control</h3>
+                            <img class="project-media" src="img/project/aro/aro.gif"
+                                alt="Dual-Arm Motion Planning &amp; Control">
+                            <p class="project-meta">Advanced Robotics coursework · University of Edinburgh</p>
+                            <p>Got a dual-arm robot to grip a cube with both hands and carry it to a target
+                                without hitting obstacles. Grasp poses come from optimisation-based inverse geometry,
+                                the route from a bi-directional RRT (RRT-Connect), and the motion is smoothed into a
+                                Bézier trajectory that an inverse-dynamics controller follows in PyBullet.</p>
+                            <ul class="skills">
+                                <li>Motion planning</li>
+                                <li>RRT*</li>
+                                <li>Inverse Kinemetic</li>
+                                <li>Pinocchio</li>
+                                <li>PyBullet</li>
+                            </ul>
+                            <!-- Extra content: hidden on the card, shown only in the pop-up -->
+                            <div class="project-details">
+                                <p class="project-meta">Pair project</p>
+                                <a class="button" href="https://github.com/LCCZK/ARO_lab" target="_blank"
+                                    rel="noopener">View on GitHub</a>
+                            </div>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li class="project">
+                        <div class="project-card">
+                            <h3>Auto-Irrigation System</h3>
+                            <img class="project-media" src="img/icon/media_placeholder.png"
+                                alt="Auto-Irrigation System">
+                            <p>A Raspberry Pi system with soil-moisture sensors and an electric valve. A script triggers
+                                watering whenever moisture drops below a configurable threshold.</p>
+                            <ul class="skills">
+                                <li>Raspberry Pi</li>
+                                <li>Sensors</li>
+                                <li>Embedded</li>
+                            </ul>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="project">
+                        <div class="project-card">
+                            <h3>REST API for Drone Delivery</h3>
+                            <img class="project-media" src="img/icon/media_placeholder.png"
+                                alt="REST API for Drone Delivery">
+                            <p>A REST API that handles requests for a drone delivery application.</p>
+                            <ul class="skills">
+                                <li>REST API</li>
+                                <li>Java</li>
+                                <li>Spring</li>
+                            </ul>
+                            <div class="project-footer">
+                                <hr>
+                                <button class="button small expand-btn" type="button">Read more</button>
+                            </div>
+                        </div> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CONTACT -->
+    <section id="contact" class="content reveal">
+        <h2>Contact me</h2>
+        <!-- <p>I'm always happy to talk about robotics, research or opportunities. Feel free to get in touch.</p> -->
+        <ul class="contact-list">
+            <li>
+                <a class="contact-pill is-button" href="https://github.com/lcczk" target="_blank" rel="noopener">
+                    <img class="contact-icon" src="img/icon/github-100.png" alt="">
+                    <span>GitHub</span>
+                    <span class="pill-arrow" aria-hidden="true">&#8599;</span>
+                </a>
             </li>
-            <li class="project">
-                <div class="project-card">
-                    <h3>MuJoCo MCP</h3>
-                    <img class="project-media" src="img/icon/media_placeholder.png" alt="MuJoCo MCP">
-                    <p>An MCP server that exposes a gym-like API as skills, so LLM agents can interact with
-                        physics simulations.</p>
-                    <ul class="skills"><li>MuJoCo</li><li>MCP</li><li>LLM agents</li><li>Python</li></ul>
-                    <div class="project-footer">
-                        <hr>
-                        <button class="button small expand-btn" type="button">Read more</button>
-                    </div>
-                </div>
+            <!-- LinkedIn and GitHub: the whole capsule is a clickable button -->
+            <li>
+                <a class="contact-pill is-button" href="https://www.linkedin.com/in/lukaschen" target="_blank" rel="noopener">
+                    <img class="contact-icon" src="img/icon/linkedin-100.png" alt="">
+                    <span>LinkedIn</span>
+                    <span class="pill-arrow" aria-hidden="true">&#8599;</span>
+                </a>
             </li>
-            <li class="project">
-                <div class="project-card">
-                    <h3>LLM-Powered SQL Query Interface</h3>
-                    <img class="project-media" src="img/icon/media_placeholder.png" alt="LLM-Powered SQL Query Interface">
-                    <p>A natural-language interface for querying databases, connecting an LLM to PostgreSQL
-                        through an MCP server.</p>
-                    <ul class="skills"><li>LLM</li><li>MCP</li><li>PostgreSQL</li></ul>
-                    <div class="project-footer">
-                        <hr>
-                        <button class="button small expand-btn" type="button">Read more</button>
-                    </div>
-                </div>
+            <!-- Email: a capsule with the address (select it to copy) -->
+            <li>
+                <span class="contact-pill">
+                    <img class="contact-icon" src="img/icon/email-100.png" alt="Email">
+                    <span>mail@lukasmp.com</span>
+                </span>
             </li>
-            <li class="project">
-                <div class="project-card">
-                    <h3>Q-Learning Path Planner</h3>
-                    <img class="project-media" src="img/icon/media_placeholder.png" alt="Q-Learning Path Planner">
-                    <p>A Q-learning agent for path planning in 2D grid worlds, with reward shaping and
-                        epsilon-greedy exploration.</p>
-                    <ul class="skills"><li>Reinforcement learning</li><li>Q-learning</li><li>Python</li></ul>
-                    <div class="project-footer">
-                        <hr>
-                        <button class="button small expand-btn" type="button">Read more</button>
-                    </div>
-                </div>
-            </li>
-            <li class="project">
-                <div class="project-card">
-                    <h3>Auto-Irrigation System</h3>
-                    <img class="project-media" src="img/icon/media_placeholder.png" alt="Auto-Irrigation System">
-                    <p>A Raspberry Pi system with soil-moisture sensors and an electric valve. A script triggers
-                        watering whenever moisture drops below a configurable threshold.</p>
-                    <ul class="skills"><li>Raspberry Pi</li><li>Sensors</li><li>Embedded</li></ul>
-                    <div class="project-footer">
-                        <hr>
-                        <button class="button small expand-btn" type="button">Read more</button>
-                    </div>
-                </div>
-            </li>
-            <li class="project">
-                <div class="project-card">
-                    <h3>REST API for Drone Delivery</h3>
-                    <img class="project-media" src="img/icon/media_placeholder.png" alt="REST API for Drone Delivery">
-                    <p>A REST API that handles requests for a drone delivery application.</p>
-                    <ul class="skills"><li>REST API</li><li>Java</li><li>Spring</li></ul>
-                    <div class="project-footer">
-                        <hr>
-                        <button class="button small expand-btn" type="button">Read more</button>
-                    </div>
-                </div>
+            <!-- Download the CV PDF -->
+            <li>
+                <a class="contact-pill is-button" href="doc/Lukas_CV.pdf" download="Lukas_Chen_CV.pdf">
+                    <svg class="contact-icon svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>
+                    </svg>
+                    <span>Download my CV</span>
+                </a>
             </li>
         </ul>
-    </div>
-    </div>
-</section>
+    </section>
 
-<!-- 4. CONTACT -->
-<section id="contact" class="content reveal">
-    <h2>Contact me</h2>
-    <p>I'm always happy to talk about robotics, research or opportunities. Feel free to get in touch.</p>
-    <ul class="contact-list">
-        <li>
-            <img class="contact-icon" src="img/icon/email-100.png" alt="Email">
-            <a href="mailto:mail@lukasmp.com">mail@lukasmp.com</a>
-        </li>
-        <li>
-            <img class="contact-icon" src="img/icon/linkedin-100.png" alt="LinkedIn">
-            <a href="https://www.linkedin.com/in/lukaschen" target="_blank" rel="noopener">linkedin.com/in/lukaschen</a>
-        </li>
-        <li>
-            <img class="contact-icon" src="img/icon/github-100.png" alt="GitHub">
-            <a href="https://github.com/lcczk" target="_blank" rel="noopener">github.com/lcczk</a>
-        </li>
-    </ul>
-</section>
-
-<!-- Pop-up for an expanded project card (filled in by main.js) -->
-<dialog class="project-modal" aria-label="Project details">
-    <div class="modal-inner">
-        <button class="modal-close" type="button" aria-label="Close">&times;</button>
-        <div class="modal-content"></div>
-    </div>
-</dialog>
+    <!-- Pop-up for an expanded project card (filled in by main.js) -->
+    <dialog class="project-modal" aria-label="Project details">
+        <div class="modal-inner">
+            <button class="modal-close" type="button" aria-label="Close">&times;</button>
+            <div class="modal-content"></div>
+        </div>
+    </dialog>
 
 </body>
 
