@@ -1,6 +1,27 @@
 // Motion is loaded by a <script> tag in index.html, which provides the global "Motion".
 const { animate, inView, scroll } = Motion;
 
+/* ---------- Light / dark mode ---------- */
+// The button swaps data-theme on <html>; style.css changes every colour from that.
+// The choice is remembered for the next visit.
+const themeToggle = document.querySelector(".theme-toggle");
+
+function updateThemeButton() {
+    const light = document.documentElement.dataset.theme === "light";
+    themeToggle.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+}
+
+themeToggle.addEventListener("click", () => {
+    const light = document.documentElement.dataset.theme !== "light";
+    if (light) document.documentElement.dataset.theme = "light";
+    else delete document.documentElement.dataset.theme;
+    try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) {}
+    updateThemeButton();
+    animate(themeToggle, { rotate: [0, 360] }, { duration: 0.5, ease: "easeOut" });
+});
+
+updateThemeButton();
+
 /* ---------- 1. Intro ---------- */
 // Fade the greeting in when the page loads.
 animate(".hero h1", { opacity: [0, 1], y: [20, 0] }, { duration: 0.6 });

@@ -2,6 +2,45 @@
     box-sizing: border-box;
 }
 
+/* ---------- Colour themes ---------- */
+/* Dark is the default. The button in the nav bar switches to light by setting
+   data-theme="light" on <html>, which swaps every colour below at once. */
+:root {
+    color-scheme: dark;
+    --bg: #000000;
+    --text: #ffffff;
+    --text-muted: #aaaaaa;
+    --text-dim: #888888;
+    --card: #151515;
+    --border: #2a2a2a;
+    --border-mid: #333333;
+    --border-strong: #444444;
+    --accent: #7cc4ff;
+    --bar-bg: rgba(0, 0, 0, 0.75);
+    --backdrop: rgba(0, 0, 0, 0.75);
+    --icon-filter: invert(1);
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f6f6f4;
+    --text: #111111;
+    --text-muted: #555555;
+    --text-dim: #666666;
+    --card: #ffffff;
+    --border: #e0e0e0;
+    --border-mid: #d4d4d4;
+    --border-strong: #c2c2c2;
+    --accent: #1a6fc9;
+    --bar-bg: rgba(246, 246, 244, 0.8);
+    --backdrop: rgba(0, 0, 0, 0.45);
+    --icon-filter: none;
+}
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
 html {
     scroll-behavior: smooth;
     font-size: 20px;   /* base text size (browser default is 16px); all rem sizes scale from this */
@@ -9,14 +48,14 @@ html {
 
 body {
     margin: 0;
-    background-color: black;
-    color: white;
+    background-color: var(--bg);
+    color: var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     line-height: 1.6;
 }
 
 h1, h2, h3, p {
-    color: white;
+    color: var(--text);
 }
 
 p {
@@ -24,7 +63,7 @@ p {
 }
 
 a {
-    color: #7cc4ff;
+    color: var(--accent);
 }
 
 h2 {
@@ -50,7 +89,7 @@ section {
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(0, 0, 0, 0.75);
+    background: var(--bar-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
 }
@@ -67,7 +106,7 @@ section {
 
 .top-nav .brand {
     justify-self: start;
-    color: white;
+    color: var(--text);
     font-size: 1.15rem;
     font-weight: 700;
     text-decoration: none;
@@ -91,26 +130,62 @@ section {
     display: block;
     padding: 0.4rem 0.9rem;
     border-radius: 999px;
-    color: #888;
+    color: var(--text-dim);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s, background-color 0.2s;
 }
 
 .top-nav a:hover {
-    color: white;
+    color: var(--text);
 }
 
 /* The section you're currently in */
 .top-nav a.active {
-    color: black;
-    background-color: white;
+    color: var(--bg);
+    background-color: var(--text);
+}
+
+/* Light/dark mode button, top-right of the nav bar */
+.theme-toggle {
+    justify-self: end;
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.theme-toggle:hover {
+    background: var(--text);
+    color: var(--bg);
+}
+
+.theme-toggle svg {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+/* Show the sun in dark mode (click for light) and the moon in light mode */
+.theme-toggle .icon-moon,
+:root[data-theme="light"] .theme-toggle .icon-sun {
+    display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon-moon {
+    display: block;
 }
 
 /* Grows from left to right as you scroll down the page (driven by main.js) */
 .progress-bar {
     height: 3px;
-    background: #7cc4ff;
+    background: var(--accent);
     transform-origin: left;
     transform: scaleX(0);
 }
@@ -142,13 +217,17 @@ section {
     min-width: 0;
 }
 
+.hero .greeting p {
+    line-height: 1.9;      /* more space between lines (the rest of the page uses 1.6) */
+}
+
 .button {
     display: inline-block;
     margin-top: 1rem;
     padding: 0.75rem 1.75rem;
-    border: 2px solid white;
+    border: 2px solid var(--text);
     border-radius: 999px;
-    color: white;
+    color: var(--text);
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.2s, color 0.2s;
@@ -169,8 +248,8 @@ button.button {
 }
 
 .button:hover {
-    background-color: white;
-    color: black;
+    background-color: var(--text);
+    color: var(--bg);
 }
 
 /* ---------- Shared section layout (About, Contact) ---------- */
@@ -182,8 +261,8 @@ button.button {
 }
 
 .card {
-    background: #151515;
-    border: 1px solid #2a2a2a;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.5rem;
 }
@@ -208,13 +287,13 @@ button.button {
 
 .timeline > li {
     padding-left: 1rem;
-    border-left: 2px solid #7cc4ff;
+    border-left: 2px solid var(--accent);
     margin-bottom: 1rem;
 }
 
 .timeline span {
     display: block;
-    color: #aaa;
+    color: var(--text-muted);
     font-size: 0.9rem;
 }
 
@@ -233,6 +312,7 @@ button.button {
     height: auto;
     padding: 0.4rem;
     background: white;      /* the logos are dark on transparent, so they need a light tile */
+    border: 1px solid var(--border);   /* keeps the tile visible on white cards in light mode */
     border-radius: 8px;
 }
 
@@ -250,6 +330,7 @@ button.button {
     object-fit: contain;    /* fits both the tall EUFS logo and the round UoE crest */
     padding: 0.3rem;
     background: white;      /* the icons have black parts, so they need a light tile */
+    border: 1px solid var(--border);   /* keeps the tile visible on white cards in light mode */
     border-radius: 8px;
 }
 
@@ -264,14 +345,14 @@ button.button {
 
 .skills li {
     padding: 0.35rem 0.9rem;
-    border: 1px solid #444;
+    border: 1px solid var(--border-strong);
     border-radius: 999px;
     font-size: 0.9rem;
 }
 
 .card h4 {
     margin: 1rem 0 0.5rem;
-    color: #aaa;
+    color: var(--text-muted);
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -298,13 +379,13 @@ button.button {
 
 .interests li {
     padding: 1rem;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--border);
     border-radius: 10px;
 }
 
 .interests span {
     display: block;
-    color: #aaa;
+    color: var(--text-muted);
     font-size: 0.9rem;
     margin-top: 0.25rem;
 }
@@ -316,7 +397,8 @@ button.button {
 
 .projects h2 {
     padding: 0 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;   /* space between the heading and the cards */
+    font-size: 2rem;
 }
 
 /* Tall wrapper: its height (set in main.js) controls how long you scroll
@@ -333,7 +415,7 @@ button.button {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: safe center;   /* centred, but never pushed up under the nav bar */
+    justify-content: safe center;   /* heading + cards centred together (never pushed under the nav bar) */
     padding: 0.75rem 0;
 }
 
@@ -367,14 +449,16 @@ button.button {
 .project-media {
     display: block;
     width: 100%;
-    height: min(18vh, 240px);   /* capped so the whole card fits on screen */
+    /* 16% of the window height (max 240px), but shorter on short windows
+       so the heading and the whole card still fit on screen */
+    height: max(80px, min(16vh, 240px, calc(100vh - 722px)));
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 1rem;
 }
 
 .project-card .project-meta {
-    color: #aaa;
+    color: var(--text-muted);
 }
 
 .project-card .skills {
@@ -383,8 +467,8 @@ button.button {
 
 .project-card {
     width: min(600px, 80vw);
-    background: #151515;
-    border: 1px solid #2a2a2a;
+    background: var(--card);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 1.25rem 2rem;
 }
@@ -410,7 +494,7 @@ button.button {
 
 .project-footer hr {
     border: none;
-    border-top: 1px solid #333;
+    border-top: 1px solid var(--border-mid);
     margin: 0 0 0.75rem;
 }
 
@@ -442,15 +526,15 @@ html:has(.project-modal[open]) {
     width: min(760px, 92vw);
     max-height: 88vh;
     padding: 0;
-    border: 1px solid #333;
+    border: 1px solid var(--border-mid);
     border-radius: 16px;
-    background: #151515;
-    color: white;
+    background: var(--card);
+    color: var(--text);
     overflow: auto;
 }
 
 .project-modal::backdrop {
-    background: rgba(0, 0, 0, 0.75);
+    background: var(--backdrop);
     backdrop-filter: blur(4px);
 }
 
@@ -474,18 +558,18 @@ html:has(.project-modal[open]) {
     right: 0.75rem;
     width: 2.25rem;
     height: 2.25rem;
-    border: 1px solid #444;
+    border: 1px solid var(--border-strong);
     border-radius: 50%;
     background: transparent;
-    color: white;
+    color: var(--text);
     font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
 }
 
 .modal-close:hover {
-    background: white;
-    color: black;
+    background: var(--text);
+    color: var(--bg);
 }
 
 .project-modal h3 {
@@ -506,7 +590,7 @@ html:has(.project-modal[open]) {
 }
 
 .project-modal .project-meta {
-    color: #aaa;
+    color: var(--text-muted);
 }
 
 .project-modal .skills {
@@ -535,7 +619,7 @@ html:has(.project-modal[open]) {
 .contact-icon {
     width: 28px;
     height: 28px;
-    filter: invert(1);      /* the icons are black; this turns them white on the dark page */
+    filter: var(--icon-filter);   /* black icons: turned white in dark mode, left black in light mode */
 }
 
 /* ---------- Phones ---------- */
@@ -611,6 +695,24 @@ html:has(.project-modal[open]) {
 
     .top-nav .brand {
         display: none;
+    }
+
+    /* The blur would trap the floating button inside the bar, so use a solid bar on phones */
+    .top-bar {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: var(--bg);
+    }
+
+    /* On phones the button floats in the bottom-right corner instead */
+    .theme-toggle {
+        position: fixed;
+        right: 1rem;
+        bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+        width: 2.8rem;
+        height: 2.8rem;
+        background: var(--card);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .top-nav a {
